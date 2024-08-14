@@ -2,13 +2,17 @@
 
 /* General Styles */
 .chat-container {
-  height: 100vh;
   display: flex;
+  height: 100vh;
+  width: 100%;
 }
 
 .sidebar {
+  width: 300px;
   border-right: 1px solid #ddd;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-header {
@@ -22,31 +26,18 @@
 
 .search-bar {
   padding: 0 1rem;
-  margin-top: 20px;
-}
-
-.search-bar .MuiInputBase-root {
-  border-radius: 20px;
-  background-color: #f1f1f1;
-  padding: 8px;
-}
-
-.tabs {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .contact-list {
-  width: 100%;
-}
-
-.contact-list-item {
-  margin-left: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .chat-area {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   background-color: #f9f9f9;
 }
 
@@ -54,7 +45,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
 }
@@ -62,8 +53,7 @@
 .chat-body {
   flex-grow: 1;
   padding: 1rem;
-  overflow-y: auto;  /* Enable scrolling only in the chat-body */
-  background-color: #f9f9f9;
+  overflow-y: auto;
 }
 
 .no-messages {
@@ -97,32 +87,24 @@
   border-top: 1px solid #ddd;
 }
 
-.message-input {
-  flex-grow: 1;
-  border-radius: 25px;
-  background-color: #f9f9f9;
-  margin-right: 1rem;
-}
-
-.send-button {
-  border-radius: 25px;
-  height: 50px;
-}
-
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
   .chat-footer {
     flex-direction: column;
     gap: 10px;
   }
 
-  .message-input {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
   .send-button {
     width: 100%;
-    padding: 12px;
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import ChatWindow from './pages/ChatWindow';

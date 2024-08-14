@@ -12,8 +12,6 @@ import {
   Typography,
   IconButton,
   InputAdornment,
-  Tabs,
-  Tab,
   Popover,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -22,9 +20,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import AudiotrackIcon from '@mui/icons-material/Audiotrack';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
 import SendIcon from '@mui/icons-material/Send';
 import img1 from '../Assets/Img/nabil.png';
 import img2 from '../Assets/Img/mohamed.png';
@@ -33,17 +28,11 @@ import './ChatWindow.css';
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
     primary: {
       main: '#ff4081',
     },
     background: {
       default: '#f9f9f9',
-      paper: '#fff',
-    },
-    text: {
-      primary: '#000',
-      secondary: '#888',
     },
   },
   typography: {
@@ -64,7 +53,6 @@ const contacts = [
 
 function ChatWindow() {
   const [selectedContact, setSelectedContact] = useState(contacts[0]);
-  const [activeTab, setActiveTab] = useState(0);
   const [messageInput, setMessageInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,10 +60,6 @@ function ChatWindow() {
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
     setMessages([]); // Clear messages when switching contacts (optional)
-  };
-
-  const handleTabChange = (event, newValue) => {
-    setActiveTab(newValue);
   };
 
   const handleSendMessage = () => {
@@ -86,7 +70,7 @@ function ChatWindow() {
         timestamp: new Date().toLocaleTimeString(),
       };
       setMessages([...messages, newMessage]);
-      setMessageInput(''); // Clear the input field after sending
+      setMessageInput('');
     }
   };
 
@@ -103,9 +87,9 @@ function ChatWindow() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container className="chat-container">
+      <Box className="chat-container">
         {/* Sidebar */}
-        <Grid item xs={3} className="sidebar">
+        <Box className="sidebar">
           <Box className="sidebar-header">
             <Typography variant="h6">Chats</Typography>
             <Box>
@@ -123,7 +107,6 @@ function ChatWindow() {
               fullWidth
               variant="outlined"
               placeholder="Search"
-              className="search"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -134,19 +117,6 @@ function ChatWindow() {
             />
           </Box>
 
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-            className="tabs"
-          >
-            <Tab label="All" />
-            <Tab label="Unread" />
-            <Tab label="Groups" />
-          </Tabs>
-
           <List className="contact-list">
             {contacts.map((contact, index) => (
               <React.Fragment key={index}>
@@ -155,17 +125,16 @@ function ChatWindow() {
                   <ListItemText
                     primary={contact.name}
                     secondary={`${contact.lastMessage} - ${contact.time}`}
-                    className="contact-list-item"
                   />
                 </ListItem>
                 {index < contacts.length - 1 && <Divider />}
               </React.Fragment>
             ))}
           </List>
-        </Grid>
+        </Box>
 
         {/* Chat Area */}
-        <Grid item xs={9} className="chat-area">
+        <Box className="chat-area">
           <Box className="chat-header">
             <Box className="chat-header-left">
               <Avatar alt={selectedContact.name} src={selectedContact.img} />
@@ -221,13 +190,7 @@ function ChatWindow() {
               }}
             >
               <IconButton>
-                <InsertPhotoIcon />
-              </IconButton>
-              <IconButton>
-                <AudiotrackIcon />
-              </IconButton>
-              <IconButton>
-                <ContactMailIcon />
+                {/* Add icons for attachments here */}
               </IconButton>
             </Popover>
             <TextField
@@ -236,20 +199,18 @@ function ChatWindow() {
               variant="outlined"
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
-              className="message-input"
             />
             <Button
               variant="contained"
               color="primary"
               onClick={handleSendMessage}
               endIcon={<SendIcon />}
-              className="send-button"
             >
               Send
             </Button>
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 }
