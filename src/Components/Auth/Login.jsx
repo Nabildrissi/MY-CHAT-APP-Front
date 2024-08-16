@@ -1,76 +1,75 @@
-import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from 'react';
+import { Container, TextField, Button, Checkbox, FormControlLabel, Typography, Box } from '@mui/material';
+import { AccountCircle, Lock } from '@mui/icons-material';
+import './login.css';
+import { useNavigate } from 'react-router-dom';
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#ff4081', // Custom color for the button
-    },
-    background: {
-      default: '#121212', // Dark background
-    },
-  },
-  typography: {
-    h4: {
-      fontWeight: 'bold',
-    },
-    subtitle1: {
-      color: '#888', // Subdued text color
-    },
-  },
-});
+const Login = () => {
+  const navigate = useNavigate()
 
-function Welcome() {
-  const [username, setUsername] = useState('');
-
-  const handleEnter = () => {
-    // Handle login
-  };
-
+  const handleClick = ()=> {
+    navigate('/chat')
+  }
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="sm" sx={{ display: 'flex', height: '100vh', alignItems: 'center' }}>
-        <Box
-          sx={{
-            width: '100%',
-            textAlign: 'center',
-            backgroundColor: '#1e1e1e',
-            padding: '2rem',
-            borderRadius: '8px',
-          }}
-        >
-          <Typography variant="h4" gutterBottom>
-            Welcome <span role="img" aria-label="wave">👋</span>
+    <div className="login-background">
+      <Container maxWidth="xs" className="login-container">
+        <Box className="login-box" boxShadow={3} p={4} borderRadius={2}>
+          <Typography variant="h4" align="center" gutterBottom>
+            Login
           </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Set a username to get started
-          </Typography>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Username"
-            InputProps={{
-              style: { color: '#fff', backgroundColor: '#2c2c2c', borderRadius: '4px' },
-            }}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            sx={{ marginBottom: '1.5rem' }}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleEnter}
-            sx={{ height: '50px', borderRadius: '25px' }}
-          >
-            Enter
-          </Button>
+          <Box mt={3}>
+            <TextField
+              fullWidth
+              label="Username"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <Box display="flex" alignItems="center" mr={1}>
+                    <AccountCircle color="action" />
+                  </Box>
+                )
+              }}
+              className="input-field"
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <Box display="flex" alignItems="center" mr={1}>
+                    <Lock color="action" />
+                  </Box>
+                )
+              }}
+              className="input-field"
+              margin="normal"
+            />
+            <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
+              <FormControlLabel control={<Checkbox color="primary" />} label="Remember me" />
+              <Typography variant="body2" className="forgot-password">
+                Forgot password?
+              </Typography>
+            </Box>
+            <Button
+            onClick={handleClick}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className="login-button"
+            >
+              LOGIN
+            </Button>
+            <Typography variant="body2" align="center" mt={3}>
+              Don't have an account?<a href='/register'> <span className="register-link" >Register</span></a>
+            </Typography>
+          </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+    </div>
   );
-}
+};
 
-export default Welcome;
+export default Login;

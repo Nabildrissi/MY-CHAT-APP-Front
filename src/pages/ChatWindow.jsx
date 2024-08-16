@@ -3,7 +3,6 @@ import {
   Box,
   TextField,
   Button,
-  Grid,
   List,
   ListItem,
   ListItemText,
@@ -21,18 +20,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
-import img1 from '../Assets/Img/nabil.png';
-import img2 from '../Assets/Img/mohamed.png';
-import img3 from '../Assets/Img/imad.png';
-import './ChatWindow.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedContact, setMessages } from '../redux/Chatroom/ChatSlice'; // Adjust the import paths accordingly
+import { sendMessage } from '../redux/Chatroom/action'; // Adjust the import paths accordingly
+import './ChatWindow.css'
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#ff4081',
+      main: '#25D366',
     },
     background: {
-      default: '#f9f9f9',
+      default: '#f0f0f0',
     },
   },
   typography: {
@@ -45,31 +44,22 @@ const theme = createTheme({
   },
 });
 
-const contacts = [
-  { name: 'Nabil', lastMessage: 'See you!', time: '19:54', img: img1 },
-  { name: 'Mohamed', lastMessage: 'Got it!', time: '15:38', img: img2 },
-  { name: 'Imad', lastMessage: 'Sure!', time: '20:12', img: img3 },
-];
-
 function ChatWindow() {
-  const [selectedContact, setSelectedContact] = useState(contacts[0]);
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.chat.contacts);
+  const selectedContact = useSelector((state) => state.chat.selectedContact);
+  const messages = useSelector((state) => state.chat.messages);
   const [messageInput, setMessageInput] = useState('');
-  const [messages, setMessages] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleContactClick = (contact) => {
-    setSelectedContact(contact);
-    setMessages([]); // Clear messages when switching contacts (optional)
-  };
 
   const handleSendMessage = () => {
     if (messageInput.trim() !== '') {
       const newMessage = {
-        text: messageInput,
-        sender: 'You',
-        timestamp: new Date().toLocaleTimeString(),
+        content: messageInput, // Ensure this matches the backend expected field
+        sender: 'You', 
+        chatRoomId: 12, // Make sure chatRoomId is provided
       };
-      setMessages([...messages, newMessage]);
+      dispatch(sendMessage(newMessage));
       setMessageInput('');
     }
   };
@@ -120,7 +110,7 @@ function ChatWindow() {
           <List className="contact-list">
             {contacts.map((contact, index) => (
               <React.Fragment key={index}>
-                <ListItem button onClick={() => handleContactClick(contact)}>
+                <ListItem button onClick={() => dispatch(setSelectedContact(contact))}>
                   <Avatar alt={contact.name} src={contact.img} />
                   <ListItemText
                     primary={contact.name}
@@ -137,8 +127,12 @@ function ChatWindow() {
         <Box className="chat-area">
           <Box className="chat-header">
             <Box className="chat-header-left">
-              <Avatar alt={selectedContact.name} src={selectedContact.img} />
-              <Typography variant="h6">{selectedContact.name}</Typography>
+              {selectedContact && (
+                <>
+                  <Avatar alt={selectedContact.name} src={selectedContact.img} />
+                  <Typography variant="h6">{selectedContact.name}</Typography>
+                </>
+              )}
             </Box>
             <Box className="chat-header-right">
               <IconButton>
@@ -168,7 +162,7 @@ function ChatWindow() {
                     </span>
                   </Typography>
                   <Typography variant="body2" className="message-text">
-                    {message.text}
+                    {message.content}
                   </Typography>
                 </Box>
               ))
@@ -201,13 +195,11 @@ function ChatWindow() {
               onChange={(e) => setMessageInput(e.target.value)}
             />
             <Button
-              variant="contained"
               color="primary"
               onClick={handleSendMessage}
               endIcon={<SendIcon />}
-            >
-              Send
-            </Button>
+              className="send-button"
+            />
           </Box>
         </Box>
       </Box>

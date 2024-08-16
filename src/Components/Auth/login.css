@@ -1,0 +1,54 @@
+.login-background {
+  background-image: url('../../Assets/Img/background.jpg'); /* Replace with your actual background image path */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  padding: 30px;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.input-field {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-button {
+  margin-top: 20px;
+  background-color: #1976d2; /* Default MUI primary color */
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.forgot-password {
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register-link {
+  color: #ff4081;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
